@@ -89,18 +89,11 @@ void setup()
 
 void loop()
 {
-  // Audio
-  tone(BUTTON_BEEPER, 1500, 5000);
-
   // Read Sensors
   float temp = dht_sensor.readTemperature();
   float hum = dht_sensor.readHumidity();
-
-  int carbonDioxide = myMHZ19.getCarbonDioxide();
-  if (carbonDioxide >= 0)
-  {
-    Serial.println(String(carbonDioxide) + " ppm");
-  }
+  auto carbonDioxide = myMHZ19.getCarbonDioxide();
+  Serial.println(String(carbonDioxide) + " ppm");
 
   // Update Display
   updateDisplay(temp, hum, carbonDioxide);
@@ -108,7 +101,7 @@ void loop()
   // Update LEDs
   updateLEDs(temp, hum);
 
-  delay(1000);
+  delay(10000);
 }
 
 void setupDisplay()
@@ -182,7 +175,7 @@ void initialDisplay()
   x = 0;
 }
 
-void updateDisplay(float temp, float hum, int co2)
+void updateDisplay(float temp, float hum, float co2)
 {
   String temp_str = String(temp);
   String hum_str = String(hum);
