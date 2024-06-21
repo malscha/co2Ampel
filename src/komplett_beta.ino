@@ -11,7 +11,6 @@
 #define CO2_IN 27
 #define MH_Z19_RX 16
 #define MH_Z19_TX 17
-#define BUTTON_BEEPER 17
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define DHT_SENSOR_PIN 26
@@ -36,10 +35,6 @@ Mhz19 myMHZ19;
 
 // Display
 Adafruit_SSD1306 oled(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
-
-// Variables
-int x;
-int y;
 
 void setup()
 {
@@ -94,6 +89,8 @@ void loop()
   float hum = dht_sensor.readHumidity();
   auto carbonDioxide = myMHZ19.getCarbonDioxide();
   Serial.println(String(carbonDioxide) + " ppm");
+  Serial.println(String(temp) + "C");
+  Serial.println(String(hum) + "%");
 
   // Update Display
   updateDisplay(temp, hum, carbonDioxide);
@@ -172,7 +169,6 @@ void initialDisplay()
   oled.setCursor(0, 10);
   oled.println(".......");
   oled.display();
-  x = 0;
 }
 
 void updateDisplay(float temp, float hum, float co2)
